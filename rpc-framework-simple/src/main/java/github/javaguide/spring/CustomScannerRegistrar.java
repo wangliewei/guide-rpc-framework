@@ -15,6 +15,11 @@ import org.springframework.stereotype.Component;
 /**
  * scan and filter specified annotations
  *
+ * ImportBeanDefinitionRegistrar 接口允许我们在运行时注册额外的 Bean 定义。通过实现该接口，我们可以在应用程序启动过程中动态地注册 Bean 定义到 Spring 的容器中。
+ * ResourceLoaderAware 接口用于接收 ResourceLoader 实例，该实例可以用于加载资源文件。
+ *
+ *
+ *
  * @author shuang.kou
  * @createTime 2020年08月10日 22:12:00
  */
@@ -30,6 +35,7 @@ public class CustomScannerRegistrar implements ImportBeanDefinitionRegistrar, Re
 
     }
 
+    // TODO: 2023/10/17 理清这个扩展方法的回调时机
     @Override
     public void registerBeanDefinitions(AnnotationMetadata annotationMetadata, BeanDefinitionRegistry beanDefinitionRegistry) {
         //get the attributes and values ​​of RpcScan annotation

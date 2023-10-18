@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class HelloController {
 
+    // 通过注解消费远程服务
     @RpcReference(version = "version2", group = "test2")
     private HelloService helloService;
 
