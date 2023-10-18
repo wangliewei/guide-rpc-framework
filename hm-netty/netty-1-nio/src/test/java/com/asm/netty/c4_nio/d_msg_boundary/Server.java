@@ -35,11 +35,11 @@ public class Server {
     private static void split(ByteBuffer source)
     {
 
-System.out.println("before split =============================================");
+        System.out.println("before split =============================================");
 
         // 读模式
         source.flip();
-//System.out.println("Charset.defaultCharset ===========" + Charset.defaultCharset().decode(source));
+        //System.out.println("Charset.defaultCharset ===========" + Charset.defaultCharset().decode(source));
         for (int i = 0; i < source.limit(); i++) {
 
             byte b = source.get(i);
@@ -47,22 +47,22 @@ System.out.println("before split =============================================")
             {
                 int position = source.position();
                 int length = i + 1 - position;
-System.out.println("                      [ i  = "+ i +" , position = " + position + " length  = " + length + " ]");
+                System.out.println("                      [ i  = "+ i +" , position = " + position + " length  = " + length + " ]");
 
                 // 完整 消息 存入 新 buffer
                 ByteBuffer target = ByteBuffer.allocate(length);
 
-System.out.print("position=[");
+                System.out.print("position=[");
                 // 从 source 读 ，写入 target
                 for (int j = 0; j < length; j++) {
 
                     target.put(source.get()); // 每一次 get 时， position++
-System.out.print(source.position() + ",");
+                System.out.print(source.position() + ",");
                 }
-System.out.println("]");
+                System.out.println("]");
                 ByteBufferUtil.debugAll(target);
 
-System.out.println("------------------------------------ 有 \\n 的一个循环 --------------------------------------------------");
+                System.out.println("------------------------------------ 有 \\n 的一个循环 --------------------------------------------------");
 
             }
 
@@ -70,7 +70,7 @@ System.out.println("------------------------------------ 有 \\n 的一个循环
 
         // 未读完部分向前压缩
         source.compact(); // 首次 read 1234567890abcdef 进入时，compact后， position=limit=16
-System.out.println("after split =============================================");
+        System.out.println("after split =============================================");
 
     }
 
@@ -104,7 +104,7 @@ System.out.println("after split =============================================");
         {
             // 3. 选择器，有未处理或未取消事件，不阻塞 继续运行 ； 否则 阻塞
             selector.select();
-System.out.println("before 循环  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+            System.out.println("before 循环  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 
             // 4. 处理事件
             //  selectKeys 内部包含所有发生的事件，譬如两个客户端连上了 会有两个key
@@ -169,9 +169,9 @@ System.out.println("before 循环  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
                              */
                             if(buffer.position() == buffer.limit())
                             {
-System.out.println("########## buffer内存长度 ########## = " + buffer.capacity());
+                                System.out.println("########## buffer内存长度 ########## = " + buffer.capacity());
                                 ByteBuffer newBuffer = ByteBuffer.allocate(buffer.capacity() * 2);
-System.out.println("########## newBuffer内存长度 ########## = " + newBuffer.capacity());
+                                System.out.println("########## newBuffer内存长度 ########## = " + newBuffer.capacity());
                                 buffer.flip(); // 老buffer 切换读模式， 给 newBuffer 复制
                                 newBuffer.put(buffer); // 复制
                                 // 修改 SelectionKey 的附件参数
@@ -191,7 +191,7 @@ System.out.println("########## newBuffer内存长度 ########## = " + newBuffer.
                 }
 
             }
-System.out.println("end 循环 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+            System.out.println("end 循环 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
         }
         /*
 

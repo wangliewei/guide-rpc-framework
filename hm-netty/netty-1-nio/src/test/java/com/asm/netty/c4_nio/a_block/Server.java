@@ -50,7 +50,7 @@ public class Server {
         ServerSocketChannel ssc = ServerSocketChannel.open();
 
         // 2. 绑定一个 监听端口
-        ssc.bind(new InetSocketAddress(8080));
+        ssc.bind(new InetSocketAddress(17666));
 
         // 3. 连接 集合
         ArrayList<SocketChannel> channels = new ArrayList<>();

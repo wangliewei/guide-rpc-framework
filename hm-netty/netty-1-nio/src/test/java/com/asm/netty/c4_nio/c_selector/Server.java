@@ -68,7 +68,7 @@ public class Server {
 
         while(true)
         {
-System.out.println("before 循环 ......");
+            System.out.println("before 循环 ......");
             // 3. 选择器，有未处理或未取消事件，不阻塞 继续运行 ； 否则 阻塞
             selector.select();
 
@@ -76,10 +76,9 @@ System.out.println("before 循环 ......");
             //  selectKeys 内部包含所有发生的事件，譬如两个客户端连上了 会有两个key
             //  如果在遍历里 还可以删除 必须用迭代器
             Iterator<SelectionKey> iter = selector.selectedKeys().iterator();
-            while(iter.hasNext())
-            {
+            while(iter.hasNext()) {
                 SelectionKey key = iter.next();
-log.debug("--------------------------- 有事件 进来 了，whatKey --------------------------------");
+                log.debug("--------------------------- 有事件 进来 了，whatKey --------------------------------");
 
                 // 每次迭代完 要移除掉，不然  可读事件 进来 循环时， 先判断肯定是ssc accept事件，
                 // 但是此时没有连接事件(这个事件还是上一次的,事件不会自己删除)，所以在处理时 sc=channel.accept() 是null ，
@@ -89,7 +88,7 @@ log.debug("--------------------------- 有事件 进来 了，whatKey ----------
                 // 5. 根据 事件类型 处理
                 if(key.isAcceptable())     // accept  -客户端连接请求触发 (服务端 事件)
                 {
-log.debug("acceptKey: {}", key);
+                    log.debug("acceptKey: {}", key);
                     // 获取 服务器对象通道
                     ServerSocketChannel channel = (ServerSocketChannel) key.channel();
                     // 获取 读写通道
@@ -100,11 +99,11 @@ log.debug("acceptKey: {}", key);
                     SelectionKey scKey = sc.register(selector, 0, null);
                     scKey.interestOps(SelectionKey.OP_READ);
 
-log.debug("SocketChannel sc : {}", sc);
+                    log.debug("SocketChannel sc : {}", sc);
 
                 }else if (key.isReadable()) // read    -可读事件
                 {
-log.debug("readKey: {}", key);
+                    log.debug("readKey: {}", key);
                     /**
                      * try 处理 客户端的 read事件(异常关闭触发) 的 read 异常
                      *
@@ -143,7 +142,7 @@ log.debug("readKey: {}", key);
                 }
 
             }
-System.out.println("end 循环 ......");
+            System.out.println("end 循环 ......");
         }
         /*
 
