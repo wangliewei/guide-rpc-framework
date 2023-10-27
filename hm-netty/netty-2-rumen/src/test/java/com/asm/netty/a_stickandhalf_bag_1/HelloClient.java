@@ -5,6 +5,7 @@ import io.netty.channel.ChannelInitializer;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.string.StringEncoder;
+import io.netty.handler.logging.LoggingHandler;
 
 import java.net.InetSocketAddress;
 
@@ -26,6 +27,7 @@ public class HelloClient {
                 .handler(new ChannelInitializer<NioSocketChannel>() {
                     // 5. 连接建立后 才执行
                     protected void initChannel(NioSocketChannel ch) throws Exception {
+                        ch.pipeline().addLast(new LoggingHandler());
 
                         //  StringEncoder 把 下面发送的字符串 转为 ByteBuf  【发送到 服务端的 EventLoopGroup】
                         ch.pipeline().addLast(new StringEncoder());

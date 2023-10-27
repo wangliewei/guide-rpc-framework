@@ -8,6 +8,7 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.string.StringDecoder;
+import io.netty.handler.logging.LoggingHandler;
 
 /**
  * 首个 netty 测试 helloword
@@ -65,6 +66,7 @@ public class HelloServer {
                                  *      StringDecoder 把 传输来的 ByteBuf 转换成字符串
                                  *
                                  */
+                                ch.pipeline().addLast(new LoggingHandler()); // 这个必须加在解码器前面 否则不会生效
                                 ch.pipeline().addLast(new StringDecoder());
 
                                 /**
