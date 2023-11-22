@@ -66,7 +66,7 @@ public class NettyRpcServer {
                     .childOption(ChannelOption.TCP_NODELAY, true)
                     // 是否开启 TCP 底层心跳机制
                     .childOption(ChannelOption.SO_KEEPALIVE, true)
-                    //表示系统用于临时存放已完成三次握手的请求的队列的最大长度,如果连接建立频繁，服务器处理创建新连接较慢，可以适当调大这个参数
+                    // 表示系统用于临时存放已完成三次握手的请求的队列的最大长度,如果连接建立频繁，服务器处理创建新连接较慢，可以适当调大这个参数
                     .option(ChannelOption.SO_BACKLOG, 128)
                     .handler(new LoggingHandler(LogLevel.INFO))
                     // 当客户端第一次进行请求的时候才会进行初始化
@@ -95,6 +95,18 @@ public class NettyRpcServer {
             serviceHandlerGroup.shutdownGracefully();
         }
     }
+
+    /*
+    *
+    * option  方法用于设置服务端的通用选项，对应于ServerBootstrap对象本身。
+    * 在代码中，使用了option(ChannelOption.SO_BACKLOG, 128)来设置服务端的选项，其中ChannelOption.SO_BACKLOG表示系统用于临时存放已完成三次握手的请求的队列的最大长度。
+    * 这个选项是针对服务端整体的设置，影响连接的处理和接受能力。
+    * childOption  方法用于设置针对每个客户端连接的选项，对应于ServerBootstrap的子通道。
+    * 在代码中，使用了childOption(ChannelOption.TCP_NODELAY, true)和childOption(ChannelOption.SO_KEEPALIVE, true)来分别设置每个客户端连接的选项。
+    * ChannelOption.TCP_NODELAY选项用于控制是否启用Nagle算法，传输数据时是否要进行合并封包。
+    * ChannelOption.SO_KEEPALIVE选项用于设置是否开启TCP底层心跳机制，保持与客户端的长连接。这些选项是针对每个连接的个别设置，影响数据传输的细节。
+    * 通过区分使用option和childOption，可以灵活地设置服务端的通用选项和每个客户端连接的选项，以满足不同的需求。
+    * */
 
 
 }
